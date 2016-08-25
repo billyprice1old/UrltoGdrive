@@ -1,8 +1,19 @@
 <?php
 ini_set('memory_limit', '-1');
-ini_set('max_execution_time', 30000);
+ini_set('max_execution_time', 0);
 session_start();
-$url_array = explode('?', 'http://'.$_SERVER ['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+
+if (isset($_SERVER['HTTPS']) &&
+    ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) ||
+    isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
+    $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+  $protocol = 'https://';
+}
+else {
+  $protocol = 'http://';
+}
+
+$url_array = explode('?', $protocol.$_SERVER ['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 
 $url = $url_array[0];
 var_dump($url);
