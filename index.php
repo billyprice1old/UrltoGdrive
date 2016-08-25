@@ -35,31 +35,25 @@ if (isset($_GET['code'])) {
 
 
 if (!empty($_POST)) {
-
+    $url = $_POST['url'];
+    
     $client->setAccessToken($_SESSION['accessToken']);
     $service = new Google_DriveService($client);
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
     $file = new Google_DriveFile();
-    foreach ($files as $file_name) {
-     
-        exec('tar zcf files/'.$file_name.'.tar.gz download/*');
-      //  exec('7z a files/'.$file_name.'.7z download');
-        
-     
+
         $mime_type = finfo_file($finfo, $file_path);
-        $file->setTitle($file_name);
-        $file->setDescription('This is a '.$mime_type.' document');
+        $file->setTitle(basename($url));
+        $file->setDescription('uploaded');
         $file->setMimeType($mime_type);
         $service->files->insert(
             $file,
             array(
-                'data' => file_get_contents($file_path),
+                'data' => file_get_contents($url),
                 'mimeType' => $mime_type
             )
         );
-      
-     unlink('files/'.$file_name.'.tar.gz');
-    }
+        
     finfo_close($finfo);
     header('location:'.$url);exit;
 }

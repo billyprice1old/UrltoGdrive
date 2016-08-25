@@ -5,13 +5,9 @@
         <title>Google Drive Example App</title>
     </head>
     <body>
-        <ul>
-        <?php foreach ($files as $file) { ?>
-            <li><?php echo $file; ?></li>
-        <?php } ?>
-        </ul>
         <form method="post" action="">
-            <input type="submit" value="enviar" name="submit">
+            <input type="text" placeholder="url" name="url">
+            <input type="submit" value="upload to google drive" name="submit">
         </form>
     </body>
 </html>
