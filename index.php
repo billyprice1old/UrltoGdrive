@@ -16,8 +16,7 @@ else {
 $url_array = explode('?', $protocol.$_SERVER ['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 
 $url = $url_array[0];
-var_dump($url);
-exit();
+
 require_once 'google-api-php-client/src/Google_Client.php';
 require_once 'google-api-php-client/src/contrib/Google_DriveService.php';
 
