@@ -3,7 +3,10 @@ ini_set('memory_limit', '-1');
 ini_set('max_execution_time', 30000);
 session_start();
 $url_array = explode('?', 'http://'.$_SERVER ['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+
 $url = $url_array[0];
+var_dump($url);
+exit();
 require_once 'google-api-php-client/src/Google_Client.php';
 require_once 'google-api-php-client/src/contrib/Google_DriveService.php';
 
