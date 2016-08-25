@@ -25,20 +25,15 @@ $client->setClientId('560284086204-84dco8h09i1bidq6g6v0j2oj2p14dnjp.apps.googleu
 $client->setClientSecret('U9cvNk2ARBeJ5AdqKOrDgqaN');
 $client->setRedirectUri($url);
 $client->setScopes(array('https://www.googleapis.com/auth/drive'));
+
 if (isset($_GET['code'])) {
     $_SESSION['accessToken'] = $client->authenticate($_GET['code']);
     header('location:'.$url);exit;
 } elseif (!isset($_SESSION['accessToken'])) {
     $client->authenticate();
 }
-$files= array();
-$dir = dir('download');
-while ($file = $dir->read()) {
-    if ($file != '.' && $file != '..') {
-        $files[] = $file;
-    }
-}
-$dir->close();
+
+
 if (!empty($_POST)) {
 
     $client->setAccessToken($_SESSION['accessToken']);
