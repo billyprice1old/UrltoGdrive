@@ -35,7 +35,7 @@ if (isset($_GET['code'])) {
 
 
 if (!empty($_POST)) {
-    $url = $_POST['url'];
+    $file_url = $_POST['url'];
     
     $client->setAccessToken($_SESSION['accessToken']);
     $service = new Google_DriveService($client);
@@ -43,13 +43,13 @@ if (!empty($_POST)) {
     $file = new Google_DriveFile();
 
         $mime_type = finfo_file($finfo, $file_path);
-        $file->setTitle(basename($url));
+        $file->setTitle(basename($file_url));
         $file->setDescription('uploaded');
         $file->setMimeType($mime_type);
         $service->files->insert(
             $file,
             array(
-                'data' => file_get_contents($url),
+                'data' => file_get_contents($file_url),
                 'mimeType' => $mime_type
             )
         );
