@@ -2,6 +2,6 @@
   "name": "Url to Google Drive",
   "description": "upload file to google drive",
   "repository": "https://github.com/deepakSP/UrltoGdrive",
-  "logo": "",
+  "logo": "http://seeklogo.com/images/P/php-logo-ADE513E748-seeklogo.com.jpg",
   "keywords": ["php", "google", "drive"]
 }
