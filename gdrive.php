@@ -35,7 +35,14 @@ if (isset($_GET['code'])) {
 
 
 if (!empty($_GET)) {
+
     $file = './split/'.$_GET['file'];
+    
+    if(isset($_GET['delete'])){
+    	unlink($file);
+    }
+   
+    
     $data = file_get_contents($file);
 
     
