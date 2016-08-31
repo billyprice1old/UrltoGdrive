@@ -6,9 +6,9 @@ if (!empty($_POST)) {
     $title = $_POST['title'];
     $split = $_POST['split'];
     
-    $newfile = $_SERVER['DOCUMENT_ROOT'] . '/upload/' . $title;
+    $newfile = './upload/' . $title;
 
-    if ( copy($file, $newfile) ) {
+    if ( copy($file_url, $newfile) ) {
     	echo "Copy success!";
     }else{
     	echo "Copy failed.";
@@ -16,9 +16,9 @@ if (!empty($_POST)) {
     
     sleep(10);
     
-    exec('split -d -b '.$split.'m /upload/' . $title.' split/pieces');
+    exec('split -b '.$split.'m -d -a 3 upload/' . $title.' split/' . $title . '.');
     
 }
 
-
+include 'index.phtml';
 ?>
