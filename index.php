@@ -1,48 +1,62 @@
-<?php
-ini_set('memory_limit', '-1');
-ini_set('max_execution_time', 0);
-ini_set('upload_max_filesize', '500000M');
-ini_set('post_max_size', 0);
-ini_set('max_input_time', '-1');
+<body>
+        <div>
+            <input type="text" placeholder="url" id="url"><br />
+            <input type="text" placeholder="title" id="title"><br />
+            <input type="text" placeholder="split size in mb" name="split"><br />
+
+            <input type="button" value="copy files" />
+            <br/><br/>
+            <div class="output"></div>
+        </div>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="jquery-1.10.1.min.js"><\/script>')</script>
+        <script>
+            var progressInterval;
+            $('input[type=button]').on('click',function(){
+		
+		var url = $('#url').val();
+                var title = $('#title').val();
+                
+                $.ajax({
+                    url:'copy.php',
+                    type: 'post',
+                    data: { "url": url, "title": title },
+                    dataType:'json',
+                    success: function(data) {
+                        console.log(data);
+                        if(progressInterval) {
+                            clearInterval(progressInterval);
+                        }
+                    },
+                    error:function(err){
+                        console.log(err);
+                        if(progressInterval) {
+                            clearInterval(progressInterval);
+                        }
+                    }
+                });
+
+                progressInterval = setInterval(function(){
+                    $.ajax({
+                        url:'copy-progress.php',
+                        type: 'get',
+                        data: {"title": title},
+                        dataType:'json',
+                        success: function(data) {
+                            console.log(data);
+                            $('.output').text((parseInt(data.progress))+"%");
+                        },
+                        error:function(err){
+                            console.log(err);
+                        }
+                    });
+
+                }, 100);
+
+            });
 
 
-function chunked_copy($from, $to) {
-    # 1 meg at a time, you can adjust this.
-    $buffer_size = 1000; 
-    $ret = 0;
-    $fin = fopen($from, "rb");
-    $fout = fopen($to, "w");
-    while(!feof($fin)) {
-        $ret += fwrite($fout, fread($fin, $buffer_size));
-    }
-    fclose($fin);
-    fclose($fout);
-    return true; # return number of bytes written
-}
 
-if (!empty($_POST)) {
+        </script>
+    </body>
 
-    $file_url = $_POST['url'];
-    $title = $_POST['title'];
-    $split = $_POST['split'];
-    
-    $newfile = './upload/' . $title;
-    //$newfiles = './split/' . $title;
-    
-    //exec('wget '.$file_url. '-O '.$newfiles);
-
-    if ( chunked_copy($file_url, $newfile) ) {
-    	echo "Copy success!";
-    }else{
-    	echo "Copy failed.";
-    }
-    
-    
-    exec('split -b '.$split.'m -d -a 3 upload/' . $title.' split/' . $title . '.');
-    
-}
-
-include 'index.phtml';
-echo '<br />';
-include 'upload.php';
-?>
