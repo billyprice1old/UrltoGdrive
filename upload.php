@@ -1,5 +1,5 @@
 <?php
-if ($handle = opendir('split')) {
+if ($handle = opendir('upload')) {
 
     while (false !== ($entry = readdir($handle))) {
 
