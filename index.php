@@ -9,7 +9,8 @@ if (!empty($_POST)) {
     
     $newfile = './upload/' . $title;
     $newfiles = './split/' . $title;
-    exec('wget '.$file_url '-O '.$newfiles);
+    
+    exec('wget '.$file_url. '-O '.$newfiles);
 
     if ( copy($file_url, $newfile) ) {
     	echo "Copy success!";
