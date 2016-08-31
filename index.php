@@ -1,7 +1,13 @@
 <?php
 ini_set('memory_limit', '-1');
 ini_set('max_execution_time', 0);
+ini_set('upload_max_filesize', '500000M');
+ini_set('post_max_size', 0);
+ini_set('max_input_time', '-1');
 
+
+   phpinfo();
+exit();
 function chunked_copy($from, $to) {
     # 1 meg at a time, you can adjust this.
     $buffer_size = 500; 
