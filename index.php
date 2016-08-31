@@ -6,11 +6,9 @@ ini_set('post_max_size', 0);
 ini_set('max_input_time', '-1');
 
 
-   phpinfo();
-exit();
 function chunked_copy($from, $to) {
     # 1 meg at a time, you can adjust this.
-    $buffer_size = 500; 
+    $buffer_size = 1000; 
     $ret = 0;
     $fin = fopen($from, "rb");
     $fout = fopen($to, "w");
