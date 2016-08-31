@@ -14,7 +14,6 @@ if (!empty($_POST)) {
     	echo "Copy failed.";
     }
     
-    sleep(10);
     
     exec('split -b '.$split.'m -d -a 3 upload/' . $title.' split/' . $title . '.');
     
