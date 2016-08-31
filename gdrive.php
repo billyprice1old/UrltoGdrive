@@ -40,6 +40,8 @@ if (!empty($_GET)) {
     
     if(isset($_GET['delete'])){
     	unlink($file);
+    	echo 'deleted <br /> exit.';
+    	header('Location: '.str_replace('gdrive', 'upload', $url));
     }
    
     
@@ -70,5 +72,6 @@ if (!empty($_GET)) {
 
   
     echo 'uploaded';
+    header('Location: '.str_replace('gdrive', 'upload', $url));
 }
 
