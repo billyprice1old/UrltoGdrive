@@ -7,7 +7,7 @@ function copyfiles($from, $to) {
 
     $buffer_size = 500000; 
     $ret = 0;
-    $fsize = fsize($from);
+    $fsize = file_size($from);
     
     $_SESSION[$to] = $ret;
     $fin = fopen($from, "rb");
@@ -36,7 +36,7 @@ function copyfiless($filename, $filesize) {
     echo json_encode('copying ' . $filename);
 }
 
-function fsize($file){
+function file_size($file){
     $ch = curl_init($file);
     curl_setopt($ch, CURLOPT_NOBODY, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -52,7 +52,7 @@ function fsize($file){
         $contentLength = null;
     }
     
-    return $contentLength;
+    echo $contentLength;
 }
 ?>
 
