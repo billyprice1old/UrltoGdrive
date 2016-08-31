@@ -9,6 +9,7 @@ function chunked_copy($from, $to) {
     $fin = fopen($from, "rb");
     $fout = fopen($to, "w");
     while(!feof($fin)) {
+        sleep(1);
         $ret += fwrite($fout, fread($fin, $buffer_size));
     }
     fclose($fin);
