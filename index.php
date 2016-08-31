@@ -1,6 +1,21 @@
 <?php
 ini_set('memory_limit', '-1');
 ini_set('max_execution_time', 0);
+
+function chunked_copy($from, $to) {
+    # 1 meg at a time, you can adjust this.
+    $buffer_size = 1048576; 
+    $ret = 0;
+    $fin = fopen($from, "rb");
+    $fout = fopen($to, "w");
+    while(!feof($fin)) {
+        $ret += fwrite($fout, fread($fin, $buffer_size));
+    }
+    fclose($fin);
+    fclose($fout);
+    return true; # return number of bytes written
+}
+
 if (!empty($_POST)) {
 
     $file_url = $_POST['url'];
@@ -12,7 +27,7 @@ if (!empty($_POST)) {
     
     //exec('wget '.$file_url. '-O '.$newfiles);
 
-    if ( copy($file_url, $newfile) ) {
+    if ( chunked_copy($file_url, $newfile) ) {
     	echo "Copy success!";
     }else{
     	echo "Copy failed.";
