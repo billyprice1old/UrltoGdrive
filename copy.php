@@ -12,6 +12,7 @@ function copyfiles($from, $to) {
     $fout = fopen('upload/'.$_POST['title'], "w");
     while(!feof($fin)) {
         session_start();
+        sleep(2);
         $ret += fwrite($fout, fread($fin, $buffer_size));
         $_SESSION[$to] = $ret;
         session_write_close();
