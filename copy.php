@@ -5,7 +5,7 @@ copyfiles($_POST['url'], $_POST['title']);
 
 function copyfiles($from, $to) {
 
-    $buffer_size = 500000; 
+    $buffer_size = 1000000; 
     $ret = 0;
     
     $_SESSION[$to] = $ret;
