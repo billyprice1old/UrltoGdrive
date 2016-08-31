@@ -5,14 +5,13 @@ copyfiles($_POST['url'], $_POST['title']);
 
 function copyfiles($from, $to) {
 
-    $buffer_size = 1000; 
+    $buffer_size = 2048; 
     $ret = 0;
     $_SESSION[$to] = $ret;
     $fin = fopen($from, "rb");
     $fout = fopen('upload/'.$_POST['title'], "w");
     while(!feof($fin)) {
         session_start();
-        sleep(2);
         $ret += fwrite($fout, fread($fin, $buffer_size));
         $_SESSION[$to] = $ret;
         session_write_close();
