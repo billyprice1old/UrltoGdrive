@@ -4,12 +4,11 @@ ini_set('max_execution_time', 0);
 
 function chunked_copy($from, $to) {
     # 1 meg at a time, you can adjust this.
-    $buffer_size = 1048576; 
+    $buffer_size = 500; 
     $ret = 0;
     $fin = fopen($from, "rb");
     $fout = fopen($to, "w");
     while(!feof($fin)) {
-        sleep(1);
         $ret += fwrite($fout, fread($fin, $buffer_size));
     }
     fclose($fin);
