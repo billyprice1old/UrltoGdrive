@@ -34,29 +34,34 @@ if (isset($_GET['code'])) {
 }
 
 
-if (!empty($_POST)) {
-    $file_url = $_POST['url'];
-    $title = $_POST['title'];
-	
-        
+if (!empty($_GET)) {
+    $file = './split/'.$_GET['file'];
+    $data = file_get_contents($file);
+
+    
     $client->setAccessToken($_SESSION['accessToken']);
     $service = new Google_DriveService($client);
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
-    $file = new Google_DriveFile();
 
-        $mime_type = finfo_file($finfo, $file_path);
-        $file->setTitle($title);
+    $file = new Google_DriveFile();
+    
+
+        $mime_type = finfo_file($finfo, $file);
+
+        $file->setTitle($_GET['file']);
         $file->setDescription('uploaded');
         $file->setMimeType($mime_type);
         $service->files->insert(
             $file,
             array(
-                'data' => file_get_contents($file_url),
+                'data' => $data,
                 'mimeType' => $mime_type
             )
         );
         
     finfo_close($finfo);
-    header('location:'.$url);exit;
+
+  
+    echo 'uploaded';
 }
-include 'index.phtml';
+
