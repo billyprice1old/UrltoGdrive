@@ -24,4 +24,6 @@ if (!empty($_POST)) {
 }
 
 include 'index.phtml';
+echo '<br />';
+include 'upload.php';
 ?>
